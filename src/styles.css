@@ -20,7 +20,7 @@
       font-weight: bold !important;
       font-size: 48px !important;
       line-height: 58px;
-      letter-spacing: -0.1em;
+      /* letter-spacing: -0.1em; */
   }
   
   .heading1 {
@@ -61,7 +61,7 @@
   }
   
   .caption {
-      font-family: Lato;
+      font-family: 'Lato';
       font-style: normal;
       font-weight: normal;
       font-size: 10px;
@@ -69,10 +69,10 @@
   }
   
   .button {
-      font-family: Lato;
+      font-family: 'Lato';
       font-style: normal;
       font-weight: bold !important;
-      font-size: 14px !important;
+      font-size: 18px !important;
       line-height: 17px;
       display: flex;
       align-items: center;

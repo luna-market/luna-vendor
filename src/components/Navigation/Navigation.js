@@ -28,7 +28,7 @@ function Navigation() {
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Button className="button-large" variant='outline-warning' style={{ marginTop: '4px' }} onClick={() => {
+        <Button className="button-large" variant='outline-warning' style={{ marginTop: '2px' }} onClick={() => {
           console.log("USER LOG OUT")
           localStorage.removeItem(AUTH_TOKEN)
           history.push(`/auth`)
