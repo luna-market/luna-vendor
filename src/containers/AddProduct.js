@@ -230,8 +230,7 @@ const AddProduct = () => {
                     </Row>
                     <Col>
                         <Row className='justify-content-end' style={{ alignItems: 'center' }}>
-                            {loading && <Spinner animation="border" />}
-                            <div className='mr-3' style={{ color: 'red' }}>{error}</div>
+                            {loading ? <Spinner className='mr-3' animation="border" /> : <div className='mr-3' style={{ color: 'red' }}>{error}</div>}
                             <Button disabled={uploaded} className='button' variant="warning" onClick={product}>添加</Button>
                         </Row>
                     </Col>
