@@ -6,6 +6,7 @@ import ProductList from './containers/ProductList'
 import Product from './containers/Product'
 import Error from './containers/Error'
 import Auth from './containers/Auth'
+import AddProduct from './components/AddProduct/AddProduct'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" component={ProductList} exact />
         <Route path="/product/:productId" component={Product} />
         <Route path='/auth' component={Auth} />
+        <Route path='/add' component={AddProduct} />
         {/* <Route path="/ProductPage/:productId" component={ProductPage}/>
         <Route path='/profile' component={Profile} />
         <Route path='/progress/:orderId' component={Progress} /> */}
