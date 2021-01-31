@@ -47,15 +47,15 @@ function Navigation() {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="justify-content-end" style={{ width: "100%" }}>
-          {/* {
+          {
             authToken ? (
               navitems()
             ) : (
                 <Nav.Item>
                 </Nav.Item>
               )
-          } */}
-          {navitems() /* temp */}
+          }
+          {/* {navitems() /* temp */}
         </Nav>
       </Navbar.Collapse>
     </Navbar >
