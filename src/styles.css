@@ -1,0 +1,170 @@
+/* font styling */
+/* @font-face {
+    font-family: 'Lato';
+    src: local('Lato'), url(./fonts/Lato-Regular.ttf) format('ttf');
+  } */
+  @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+
+  .display {
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 900 !important;
+      font-size: 64px !important;
+      line-height: 77px;
+      letter-spacing: -0.07em;
+  }
+  
+  .title {
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: bold !important;
+      font-size: 48px !important;
+      line-height: 58px;
+      letter-spacing: -0.1em;
+  }
+  
+  .heading1 {
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: bold !important;
+      font-size: 32px !important;
+      line-height: 38px;
+      /* identical to box height */
+      letter-spacing: -0.05em;
+  }
+  
+  .heading3 {
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: bold !important;
+      font-size: 18px !important;
+      /* identical to box height */
+      letter-spacing: -0.03em;
+  }
+  
+  .label {
+      font-family: Lato;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px !important;
+      line-height: 19px !important;
+      text-transform: uppercase;
+  
+  }
+  
+  .text {
+      font-family: Lato;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 150%;
+  }
+  
+  .caption {
+      font-family: Lato;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 10px;
+      line-height: 150%;
+  }
+  
+  .button {
+      font-family: Lato;
+      font-style: normal;
+      font-weight: bold !important;
+      font-size: 14px !important;
+      line-height: 17px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      text-transform: uppercase;
+  }
+  
+  .button-large {
+      font-family: Lato;
+      font-style: normal;
+      font-weight: bold !important;
+      font-size: 24px !important;
+      line-height: 17px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      text-transform: uppercase;
+  }
+  
+  /* text formatting*/
+  .one-line {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+  }
+  
+  .three-line {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+  }
+  
+  .noselect {
+      -webkit-touch-callout: none;
+      /* iOS Safari */
+      -webkit-user-select: none;
+      /* Safari */
+      -khtml-user-select: none;
+      /* Konqueror HTML */
+      -moz-user-select: none;
+      /* Old versions of Firefox */
+      -ms-user-select: none;
+      /* Internet Explorer/Edge */
+      user-select: none;
+      /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  }
+  
+  
+  /* colors */
+  .yellow {
+      color: #ffc107 !important;
+  }
+  
+  .bg-yellow {
+      background-color: #ffc107 !important;
+  }
+  
+  .black {
+      color: #212529 !important;
+  }
+  
+  .bg-black {
+      background-color: #212529 !important;
+  }
+  
+  .white {
+      color: #fff !important;
+  }
+  
+  .bg-white {
+      background-color: #fff !important;
+  }
+  
+  .blue {
+      color: #4D5176 !important;
+  }
+  
+  .bg-blue {
+      background-color: #4D5176 !important;
+  }
+  
+  
+  /* box model */
+  .stripped {
+      border: 0 !important;
+      border-radius: 0 !important;
+      padding: 0 !important;
+  }
+  
+  .rect {
+      border-radius: 0 !important;
+  }
