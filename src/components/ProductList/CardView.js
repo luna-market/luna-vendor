@@ -33,7 +33,7 @@ function CardView(props) {
         }
     });
 
-    if (loading) return <Loader centered={true} />
+    if (loading) return <Loader  />
 
     return (
 

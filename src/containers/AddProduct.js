@@ -112,11 +112,11 @@ const AddProduct = () => {
     }
 
     return (
-        <Container className='mt-5'>
-            <h1 className='heading1 mb-3 ml-4'>新增商品</h1>
+        <Container className='mt-5 mb-5'>
+            <h1 className='heading1 mb-3 '>新增商品</h1>
             <Card border='light p-3'>
-                {/* <Card.Title className='title'>添加商品</Card.Title> */}
                 <Card.Body>
+                {/* <Card.Text className='title'>添加商品</Card.Text> */}
                     <Row>
                         <Col >
                             <Form.Group>

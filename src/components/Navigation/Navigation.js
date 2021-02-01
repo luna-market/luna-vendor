@@ -13,22 +13,22 @@ function Navigation() {
   const navitems = () => 
     <>
       <Nav.Item>
-        <Nav.Link className="heading1 white mr-3" href="/orders">
+        <Nav.Link className="heading3 white mr-3" href="/orders">
           订单
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link className="mr-3 heading1 white" href="/">
+        <Nav.Link className="mr-3 heading3 white" href="/">
           商品
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link className="mr-5 heading1 white" href="/">
+        <Nav.Link className="mr-4 heading3 white" href="/profile">
           我的账号
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Button className="button-large" variant='outline-warning' style={{ marginTop: '2px' }} onClick={() => {
+        <Button className="button" variant='outline-warning'  onClick={() => {
           console.log("USER LOG OUT")
           localStorage.removeItem(AUTH_TOKEN)
           history.push(`/auth`)

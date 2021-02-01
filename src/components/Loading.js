@@ -14,8 +14,8 @@ function Loading(props) {
             <Row className='justify-content-center mb-3' style={center()}>
                 <Loader type="Grid" color="#4D5176" />
             </Row>
-            <Row className='justify-content-center mb-5 label'>
-                Loading...
+            <Row className='justify-content-center mb-5 button'>
+                努力加载中...
             </Row>
         </Container>
     )

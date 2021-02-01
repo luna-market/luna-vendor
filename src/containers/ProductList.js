@@ -19,13 +19,15 @@ function ProductList(props) {
     return (
         <Container className='mt-5'>
             <Row className='justify-content-between'>
-                <Col className='heading1 mb-3'>商品一览</Col>
-                <div>
+                <Col className='heading1'>商品一览</Col>
+                <Col></Col>
+                <Col sm='auto'>
                     <Button className='button' variant='success' onClick={()=>{history.push('/add')}}>
                         <FontAwesomeIcon icon={faPlus} />&nbsp; 添加商品
                     </Button>
-                </div>
+                </Col>
             </Row>
+            <hr className='mb-3'/>
 
             {/* <TableView /> */}
             <CardView />
