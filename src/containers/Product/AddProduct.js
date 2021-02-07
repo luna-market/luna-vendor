@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router';
 
 import { gql, useMutation } from '@apollo/client';
-import { VENDOR_ID } from "../constants"
+import { VENDOR_ID } from "../../constants"
 
 import { Form, Button, Container, Col, Row, Card, InputGroup, Spinner, Image } from 'react-bootstrap'
-import '../styles.css'
+import '../../styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLink } from '@fortawesome/free-solid-svg-icons'
 

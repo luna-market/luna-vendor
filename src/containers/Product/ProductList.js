@@ -3,8 +3,8 @@ import { Container, Row, Button, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
-import CardView from '../components/ProductList/CardView'
-import TableView from '../components/ProductList/TableView'
+import CardView from '../../components/ProductList/CardView'
+import TableView from '../../components/ProductList/TableView'
 import { useHistory } from 'react-router'
 
 const GET_PRODUCT = `
