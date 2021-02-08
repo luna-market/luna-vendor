@@ -172,7 +172,7 @@ const AddProduct = () => {
                                     onChange={e => set_requirement(e.target.value)}
                                 >
                                     <option value="TYPE0">仅下单</option>
-                                    <option value="TYPE1">5星+评论</option>
+                                    <option value="TYPE1">5星</option>
                                     <option value="TYPE2">5星+评论</option>
                                     <option value="TYPE3">5星+评论+图片</option>
                                 </Form.Control>

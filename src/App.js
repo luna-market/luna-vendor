@@ -22,6 +22,7 @@ function App() {
         {/* <Route path="/ProductPage/:productId" component={ProductPage}/>
         
         <Route path='/progress/:orderId' component={Progress} /> */}
+        <Route path='/err' component={Error} />
         <Route component={Error} />
       </Switch>
       {/* <Hints/> */}
