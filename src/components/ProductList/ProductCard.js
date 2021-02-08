@@ -12,7 +12,7 @@ const ProductCard = (props) => {
     const cardOnClick = () => {
 
         /* change destination appropriate to vendor portal */
-        history.push('/ProductPage/' + props.pid)
+        history.push('/product/' + props.pid)
     }
 
     return (
