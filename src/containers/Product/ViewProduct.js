@@ -7,10 +7,10 @@ import { VENDOR_ID } from "../../constants"
 import { Form, Button, Container, Col, Row, Card, InputGroup, Spinner, Image } from 'react-bootstrap'
 import '../../styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLink, faEdit, faTrash, faPager, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faLink, faEdit, faEye, faEyeSlash, faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import Loading from '../../components/Loading'
-import Error from '../Error'
+// import Error from '../Error'
 
 const GET_VENDOR_PRODUCT_IDS = gql`
 query Query($getProductsByVendorIdId: ID!) {
@@ -58,10 +58,13 @@ mutation Mutation($updateProductId: Int!, $updateProductName: String, $updatePro
     }
   }`
 
+const STATUS_TOGGLE = ``
+
 const ViewProduct = (props) => {
     const history = useHistory()
     const productId = Number(useParams().productId)
 
+    /* prevent vendor from accessing other vendor's data */
     useQuery(GET_VENDOR_PRODUCT_IDS, {
         variables: {
             "getProductsByVendorIdId": localStorage.getItem(VENDOR_ID)
@@ -194,16 +197,19 @@ const ViewProduct = (props) => {
 
     return (
         <Container className='mt-4 mb-5'>
-            <Row className='justify-content-between'>
-                <Col className='heading1 mt-2'>商品信息</Col>
-                <Col sm='auto' >
-                    {updateLoading ? <Spinner className='mt-2 mr-4' animation="border" style={{ alignSelf: 'center' }} size="sm" /> : <div className='mr-4 mt-2 ' style={{ color: 'red' }}>{error}</div>}
-                    {editMode && <Button className='button mr-4 mt-2' variant="info" onClick={updateProduct}>保存更改</Button>}
-                    <Button className='button mr-4 mt-2' variant='warning' onClick={() => { setEditMode(!editMode) }}>
+            <Row className='justify-content-between' style={{alignItems:'center'}}>
+                <Col className='heading1 mt-3' >商品信息</Col>
+                <Col sm='auto' className='mt-1' >
+                    {updateLoading ? <Spinner className='mr-4' animation="border" size="sm" /> : <div className='mr-4 mt-2 ' style={{ color: 'red' }}>{error}</div>}
+                    {editMode && <Button className='button mr-4' variant="info" onClick={updateProduct}>保存更改</Button>}
+                    <Button className='button mr-4' variant='warning' onClick={() => { setEditMode(!editMode) }}>
                         {editMode ? '取消修改' : <><FontAwesomeIcon icon={faEdit} />&nbsp; 修改</>}
                     </Button>
-                    <Button className='button mt-2' variant='danger' onClick={deleteProduct}>
-                        <FontAwesomeIcon icon={faTrash} />&nbsp; 删除
+                    <Button className='button' variant={status ? 'success' : 'outline-secondary'}
+                        onClick={
+                            () => set_status(!status)  // Need to have proper handler
+                        }>
+                        <FontAwesomeIcon icon={status ? faEye : faEyeSlash} />&nbsp; {status ? '显示中' : '隐藏中'}
                     </Button>
                 </Col>
             </Row>

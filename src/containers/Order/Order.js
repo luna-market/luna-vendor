@@ -1,0 +1,166 @@
+import { useState } from 'react';
+import { useQuery, useMutation, gql } from '@apollo/client';
+import { useHistory, useParams } from "react-router";
+import { AUTH_TOKEN, VENDOR_ID } from "../../constants"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCopy, faClipboard } from '@fortawesome/free-solid-svg-icons'
+import { Container, Button, Badge, Card, OverlayTrigger, Tooltip, Row, Col, Image } from "react-bootstrap";
+import '../../styles.css'
+
+import Loading from '../../components/Loading'
+
+const GET_VENDOR_ID = gql`
+query Query($getOrderByIdId: ID!) {
+    getOrderByID(id: $getOrderByIdId) {
+      vendor_id
+    }
+  }
+`
+const GET_ORDER = gql`
+query Query($getOrderByIdId: ID!) {
+    getOrderByID(id: $getOrderByIdId) {
+      product {
+        name
+      }
+      az_order_number
+      order_screenshot
+      payment
+      created_date
+      amazon_review_screenshot
+      order_status
+      user {
+        payment_type
+        payment_account_id
+      }
+    }
+  }
+`
+
+
+function Order(props) {
+    const { orderId } = useParams()
+    const history = useHistory()
+
+    const { loading } = useQuery(GET_VENDOR_ID, {
+        variables: {
+            "getOrderByIdId": orderId
+        },
+        onCompleted: (data) => {
+            // console.log(data.getOrderByID.vendor_id, localStorage.getItem(VENDOR_ID))
+            if (data.getOrderByID.vendor_id !== Number(localStorage.getItem(VENDOR_ID))) history.push('/err')
+        }
+    })
+
+    const [productName, setProductName] = useState('')
+    const [amzOrderNumber, setAmzOrderNumber] = useState('')
+    const [purchaseImg, setPurchaseImg] = useState('')
+    const [reviewImg, setReviewImg] = useState('')
+    const [date, setDate] = useState('')
+    const [status, setStatus] = useState('')
+    const [payType, setPayType] = useState('')
+    const [payId, setPayId] = useState('')
+
+    const [tooltipMessage, setTooltipMessage] = useState('复制到剪贴板')
+
+
+    useQuery(GET_ORDER, {
+        variables: {
+            "getOrderByIdId": orderId
+        },
+        onCompleted: (data) => {
+            setProductName(data.getOrderByID.product.name)
+            setAmzOrderNumber(data.getOrderByID.az_order_number)
+            setPurchaseImg(data.getOrderByID.order_screenshot)
+            setStatus(data.getOrderByID.order_status)
+            setDate(data.getOrderByID.created_date)
+            setReviewImg(data.getOrderByID.amazon_review_screenshot)
+            setPayType(data.getOrderByID.user.payment_type)
+            setPayId(data.getOrderByID.user.payment_account_id)
+        }
+    })
+
+    const pill = (status) => {
+        switch (status) {
+            case 'APPLIED': return { color: 'info', text: '待下单' }
+            case 'PURCHASED': return { color: 'warning', text: '已下单' }
+            case 'REVIEWED': return { color: 'danger', text: '已留评' }
+            case 'APPROVED': return { color: 'success', text: '已通过审核' }
+            case 'FINISHED': return { color: 'dark', text: '已完成' }
+            default: return { color: 'light', text: '' }
+        }
+    }
+
+    const copyPayId = () => {
+        navigator.clipboard.writeText(payId)
+        setTooltipMessage('已复制!')
+        setTimeout(() => {
+            setTooltipMessage('复制到剪贴板')
+        }, 2000);
+    }
+
+
+    if (loading) return <Loading centered={true} />
+    return (
+        <Container className='mt-5 mb-4' style={{ maxWidth: '1000px' }}>
+            <Card border='light'>
+                <Card.Body className='p-5'>
+                    <Row className='justify-content-between' style={{ alignItems: 'center' }}>
+                        <Col xs='auto' className='mt-1'>
+                            <div className='label'>{new Date(Number(date)).toLocaleDateString()}</div>
+                            <div className='heading1'>订单 #{orderId} {productName}</div>
+                        </Col>
+                        <Col xs='auto'><Badge className='heading3 p-2' pill variant={pill(status).color}>&nbsp;{pill(status).text}&nbsp;</Badge></Col>
+                        {/* <Col className='label mt-3'></Col>
+                        <Col className='mt-3' sm='auto'>
+
+                        </Col> */}
+                    </Row>
+                    <hr className='mb-3' />
+
+                    <Row className='mb-5'>
+                        <Col sm={2}>
+                            <Card.Text className='heading3 mb-0'>亚马逊单号</Card.Text>
+                        </Col>
+                        <Col sm={3}>
+                            <Card.Text className='text mb-3'>{amzOrderNumber ? amzOrderNumber : '[暂无订单号]'}</Card.Text>
+                        </Col>
+                        <Col sm={1}></Col>
+                        <Col sm={2}>
+                            <Card.Text className='heading3 mb-1'>结算信息</Card.Text>
+                        </Col>
+                        <Col sm={4}>
+                            <Card.Text className='text mb-1'>支付应用: {payType}</Card.Text>
+                            <Card.Text className='text'>支付账号: {payId} &nbsp;
+                        <OverlayTrigger
+                                    placement='right'
+                                    overlay={
+                                        <Tooltip className='ml-1'>
+                                            {tooltipMessage}
+                                        </Tooltip>
+                                    }
+                                >
+                                    <FontAwesomeIcon icon={faCopy} className='blue' onClick={copyPayId} />
+                                </OverlayTrigger>
+                            </Card.Text>
+                        </Col>
+                    </Row>
+                    {purchaseImg &&
+                        <Row className='mb-1 pt-5'>
+                            <Col xs={2}><Card.Text className='heading3'>订单截图</Card.Text></Col>
+                            <Col><Image thumbnail fluid src={purchaseImg} /></Col>
+                        </Row>}
+
+                    {reviewImg &&
+                        <Row className='mt-4 mb-1'>
+                            <Col xs={2}><Card.Text className='heading3'>留评截图</Card.Text></Col>
+                            <Col><Image thumbnail fluid src={reviewImg} /></Col>
+                        </Row>}
+
+
+                </Card.Body>
+            </Card>
+        </Container>
+    )
+}
+
+export default Order
