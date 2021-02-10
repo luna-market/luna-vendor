@@ -14,7 +14,9 @@ query Query($getProductsByVendorIdId: ID!) {
       price
       images
       sold_quantity
+      provided_quantity
       status
+      featured
     }
   }
 `
@@ -33,7 +35,7 @@ function CardView(props) {
         }
     });
 
-    if (loading) return <Loader  />
+    if (loading) return <Loader />
 
     return (
 
@@ -43,7 +45,17 @@ function CardView(props) {
         >
             <Row className="product-list-row justify-content-left">
                 {content.map((p) => {
-                    return <ProductCard key={p.id} title={p.name} msrp={p.price} img={p.images[0]} pid={p.id} />
+                    return <ProductCard
+                        key={p.id}
+                        title={p.name}
+                        msrp={p.price}
+                        img={p.images[0]}
+                        pid={p.id} 
+                        provided={p.provided_quantity}
+                        sold={p.sold_quantity}
+                        status={p.status}
+                        featured={p.featured}
+                        />
                 })}
             </Row>
         </Container>

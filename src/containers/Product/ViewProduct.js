@@ -7,7 +7,7 @@ import { VENDOR_ID } from "../../constants"
 import { Form, Button, Container, Col, Row, Card, InputGroup, Spinner, Image } from 'react-bootstrap'
 import '../../styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLink, faEdit, faEye, faEyeSlash, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faLink, faEdit, faEye, faEyeSlash, faSave } from '@fortawesome/free-solid-svg-icons'
 
 import Loading from '../../components/Loading'
 // import Error from '../Error'
@@ -199,13 +199,13 @@ const ViewProduct = (props) => {
         <Container className='mt-4 mb-5'>
             <Row className='justify-content-between' style={{alignItems:'center'}}>
                 <Col className='title mt-3' >商品信息</Col>
-                <Col sm='auto' className='mt-1' >
+                <Col sm='auto'  >
                     {updateLoading ? <Spinner className='mr-4' animation="border" size="sm" /> : <div className='mr-4 mt-2 ' style={{ color: 'red' }}>{error}</div>}
-                    {editMode && <Button className='button mr-4' variant="info" onClick={updateProduct}>保存更改</Button>}
-                    <Button className='button mr-4' variant='warning' onClick={() => { setEditMode(!editMode) }}>
+                    {editMode && <Button className='button mr-4 mt-3' variant="info" onClick={updateProduct}><FontAwesomeIcon icon={faSave} />&nbsp; 保存更改</Button>}
+                    <Button className='button mr-4 mt-3' variant='warning' onClick={() => { setEditMode(!editMode) }}>
                         {editMode ? '取消修改' : <><FontAwesomeIcon icon={faEdit} />&nbsp; 修改</>}
                     </Button>
-                    <Button className='button' variant={status ? 'success' : 'outline-secondary'}
+                    <Button className='button mt-3' variant={status ? 'success' : 'outline-secondary'}
                         onClick={
                             () => set_status(!status)  // Need to have proper handler
                         }>
@@ -220,7 +220,7 @@ const ViewProduct = (props) => {
             <Row>
                 <Col >
                     <Form.Group className='mb-5'>
-                        <Form.Label className='label'> 产品名称 </Form.Label>
+                        <Form.Label className='heading1 blue'> 产品名称 </Form.Label>
                         {editMode ?
                             <Form.Control value={product_name} type="text" onChange={e => set_product_name(e.target.value)} />
                             :
@@ -230,7 +230,7 @@ const ViewProduct = (props) => {
                     <Row>
                         <Col>
                             <Form.Group className='mb-5'>
-                                <Form.Label className='label'> 品牌 </Form.Label>
+                                <Form.Label className='heading1 blue'> 品牌 </Form.Label>
                                 {editMode ?
                                     <Form.Control value={brand} type="text" onChange={e => set_brand(e.target.value)} />
                                     :
@@ -239,7 +239,7 @@ const ViewProduct = (props) => {
                         </Col>
                         <Col xs={editMode ? 4 : 6}>
                             <Form.Group className='mb-5'>
-                                <Form.Label className='label'> 原价 </Form.Label>
+                                <Form.Label className='heading1 blue'> 原价 </Form.Label>
                                 {editMode ?
                                     <InputGroup className="mb-3">
                                         <InputGroup.Prepend>
@@ -255,7 +255,7 @@ const ViewProduct = (props) => {
 
 
                     <Form.Group className='mb-5'>
-                        <Form.Label className='label'> 亚马逊产品链接 </Form.Label>
+                        <Form.Label className='heading1 blue'> 亚马逊产品链接 </Form.Label>
                         {editMode ?
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
@@ -264,11 +264,11 @@ const ViewProduct = (props) => {
                                 <Form.Control value={amazon_link} type="text" onChange={e => set_amazon_link(e.target.value)} />
                             </InputGroup>
                             :
-                            <Form.Text className='heading3'><FontAwesomeIcon icon={faLink} />&nbsp;<a href={amazon_link}>{amazon_link}</a></Form.Text>}
+                            <Form.Text className='heading3'><FontAwesomeIcon icon={faLink} />&nbsp;<a href={amazon_link} style={{wordBreak:'strict', display:'inline-block'}}>{amazon_link}</a></Form.Text>}
                     </Form.Group>
 
                     <Form.Group className='mb-5'>
-                        <Form.Label className='label'> 产品描述 </Form.Label>
+                        <Form.Label className='heading1 blue'> 产品描述 </Form.Label>
                         {editMode ?
                             <Form.Control value={description} as="textarea" rows='10' onChange={e => set_description(e.target.value)} />
                             :
@@ -280,7 +280,7 @@ const ViewProduct = (props) => {
 
                 <Col lg={editMode ? 4 : 4}>
                     <Form.Group className='mb-5'>
-                        <Form.Label className='label'> 留评要求 </Form.Label>
+                        <Form.Label className='heading1 blue'> 留评要求 </Form.Label>
                         {editMode ?
                             <Form.Control
                                 as="select"
@@ -302,7 +302,7 @@ const ViewProduct = (props) => {
                     <Row>
                         <Col>
                             <Form.Group className='mb-5'>
-                                <Form.Label className='label'> 所需单数{editMode && '(需大于已售单数)'}</Form.Label>
+                                <Form.Label className='heading1 blue'> 所需单数{editMode && '(需大于已售单数)'}</Form.Label>
                                 {editMode ?
                                     <InputGroup className="mb-3">
                                         <Form.Control value={provided_quantity} placeholder="0" type="text" onChange={e => set_provided_quantity(e.target.value)} />
@@ -316,14 +316,14 @@ const ViewProduct = (props) => {
                         </Col>
                         <Col xs={editMode ? 4 : 6}>
                             <Form.Group className='mb-5'>
-                                <Form.Label className='label'>已售单数 </Form.Label>
+                                <Form.Label className='heading1 blue'>已售单数 </Form.Label>
                                 <Form.Text className='heading3'>{sold_quantity}件</Form.Text>
                             </Form.Group>
                         </Col>
                     </Row>
 
                     <Form.Group className='mb-5'>
-                        <Form.Label className='label'> 搜索关键词 </Form.Label>
+                        <Form.Label className='heading1 blue'> 搜索关键词 </Form.Label>
                         {editMode ?
                             <Form.Control value={search_key_word} type="text" onChange={e => set_search_key_word(e.target.value)} />
                             :
@@ -333,7 +333,7 @@ const ViewProduct = (props) => {
                     <Form.Group className='mb-5'>
                         {editMode ?
                             <>
-                                <Form.Label className='label'> 商品当前在亚马逊网站处在 </Form.Label>
+                                <Form.Label className='heading1 blue'> 商品当前在亚马逊网站处在 </Form.Label>
                                 <InputGroup
                                     className="mb-3"
                                     style={{ width: '140px' }}
@@ -349,14 +349,14 @@ const ViewProduct = (props) => {
                             </>
                             :
                             <>
-                                <Form.Label className='label'> 商品当前在亚马逊网站处在: <span className='heading3'> 第{amazon_location}页</span></Form.Label>
+                                <Form.Label className='heading1 blue'> 商品当前在亚马逊网站处在: <span className='heading3'> 第{amazon_location}页</span></Form.Label>
 
                             </>}
                     </Form.Group>
 
                     {editMode ?
                         <Form.File custom={false}>
-                            <Form.File.Label className='label' data-browse="Browse files">产品图片</Form.File.Label>
+                            <Form.File.Label className='heading1 blue' data-browse="Browse files">产品图片</Form.File.Label>
                             <Container>
                                 <Row lg={2}>
                                     <Image src={images[0]} fluid />
@@ -374,7 +374,7 @@ const ViewProduct = (props) => {
                         :
                         <Container>
                             <Row >产品图片 </Row>
-                            <Row className='mt-2' lg={2}><Image src={images[0]} fluid /></Row>
+                            <Row className='mt-2' sm={2} md={4} lg={2}><Image src={images[0]} fluid /></Row>
                         </Container>
                     }
 

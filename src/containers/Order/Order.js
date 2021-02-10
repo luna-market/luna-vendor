@@ -3,7 +3,7 @@ import { useQuery, useMutation, gql } from '@apollo/client';
 import { useHistory, useParams } from "react-router";
 import { AUTH_TOKEN, VENDOR_ID } from "../../constants"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCopy } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons'
 import { Container, Button, Badge, Card, OverlayTrigger, Tooltip, Row, Col, Image } from "react-bootstrap";
 import '../../styles.css'
 
@@ -21,6 +21,7 @@ query Query($getOrderByIdId: ID!) {
     getOrderByID(id: $getOrderByIdId) {
       product {
         name
+        price
       }
       az_order_number
       order_screenshot
@@ -51,6 +52,7 @@ function Order(props) {
     })
 
     const [productName, setProductName] = useState('')
+    const [price, setPrice] = useState('')
     const [amzOrderNumber, setAmzOrderNumber] = useState('')
     const [purchaseImg, setPurchaseImg] = useState('')
     const [reviewImg, setReviewImg] = useState('')
@@ -68,6 +70,7 @@ function Order(props) {
         },
         onCompleted: (data) => {
             setProductName(data.getOrderByID.product.name)
+            setPrice(data.getOrderByID.product.price)
             setAmzOrderNumber(data.getOrderByID.az_order_number)
             setPurchaseImg(data.getOrderByID.order_screenshot)
             setStatus(data.getOrderByID.order_status)
@@ -106,7 +109,7 @@ function Order(props) {
                     <Row className='justify-content-between' style={{ alignItems: 'center' }}>
                         <Col xs='auto' className='mt-1 mb-1'>
                             <div className='label'>{new Date(Number(date)).toLocaleDateString()}</div>
-                            <div className='title'>订单 #{orderId} </div>
+                            <div className='title blue'>订单 #{orderId} </div>
                         </Col>
                         <Col xs='auto'><Badge className='heading3 p-2' pill variant={pill(status).color}>&nbsp;{pill(status).text}&nbsp;</Badge></Col>
                         {/* <Col className='label mt-3'></Col>
@@ -114,25 +117,25 @@ function Order(props) {
 
                         </Col> */}
                     </Row>
-                    
-                    <Card.Text className='one-line heading3'>{productName}</Card.Text>
+
+                    <Card.Text className='one-line text ml-1'>{productName}</Card.Text>
                     <hr className='mb-3' />
 
                     <Row className='mb-5'>
                         <Col sm={2}>
-                            <Card.Text className='heading3 mb-0'>亚马逊单号</Card.Text>
+                            <Card.Text className='heading1 blue mb-0'>亚马逊单号</Card.Text>
                         </Col>
                         <Col sm={3}>
-                            <Card.Text className='text mb-3'>{amzOrderNumber ? amzOrderNumber : '[暂无订单号]'}</Card.Text>
+                            <Card.Text className='heading3 mb-3'>{amzOrderNumber ? amzOrderNumber : '[暂无订单号]'}</Card.Text>
                         </Col>
                         <Col sm={1}></Col>
                         <Col sm={2}>
-                            <Card.Text className='heading3 mb-1'>结算信息</Card.Text>
+                            <Card.Text className='heading1 blue mb-1'>结算信息</Card.Text>
                         </Col>
                         <Col sm={4}>
-                            <Card.Text className='text mb-1'>支付应用: {payType}</Card.Text>
-                            <Card.Text className='text'>支付账号: {payId} &nbsp;
-                        <OverlayTrigger
+                            <Card.Text className='heading3 mb-1'>支付应用: {payType}</Card.Text>
+                            <Card.Text className='heading3 mb-2'>支付账号: {payId} &nbsp;
+                                <OverlayTrigger
                                     placement='right'
                                     overlay={
                                         <Tooltip className='ml-1'>
@@ -143,22 +146,24 @@ function Order(props) {
                                     <FontAwesomeIcon icon={faCopy} className='blue' onClick={copyPayId} />
                                 </OverlayTrigger>
                             </Card.Text>
+                            <Card.Text className={status==='REVIEWED'?'heading1 mb-2 yellow':'heading3'}>待补贴金额: ${price}</Card.Text>
+                            {status==='REVIEWED' && <Button className='button' variant='warning'><FontAwesomeIcon icon={faCheck}/> 我已完成补贴</Button>}
                         </Col>
                     </Row>
                     {purchaseImg &&
                         <>
                             <hr />
                             <Row className='mb-1'>
-                                <Col xs={2}><Card.Text className='heading3'>订单截图</Card.Text></Col>
+                                <Col xs={2}><Card.Text className='heading1 blue'>订单截图</Card.Text></Col>
                                 <Col><Image thumbnail fluid src={purchaseImg} /></Col>
                             </Row>
                         </>}
 
                     {reviewImg &&
                         <>
-                            <hr className='mt-5'/>
+                            <hr className='mt-5' />
                             <Row className='mb-1'>
-                                <Col xs={2}><Card.Text className='heading3'>留评截图</Card.Text></Col>
+                                <Col xs={2}><Card.Text className='heading1 blue'>留评截图</Card.Text></Col>
                                 <Col><Image thumbnail fluid src={reviewImg} /></Col>
                             </Row>
                         </>}
