@@ -27,7 +27,7 @@ const ProductCard = (props) => {
                     variant="top"
                     src={props.img}
                 />
-                <Card.Body className='pl-2 pt-3' style={{ textAlign: "left" }}>
+                <Card.Body className='pl-3 pt-3' style={{ textAlign: "left" }}>
                     <Card.Title className='heading3 one-line mb-1'>
                         {props.title}
                     </Card.Title>
@@ -42,7 +42,7 @@ const ProductCard = (props) => {
                         :
                         <Badge pill className='bold mt-1 mr-2' variant='secondary'><FontAwesomeIcon icon={faEyeSlash} /> 隐藏中</Badge>
                     }
-                    {!props.featured &&
+                    {props.featured &&
                         <Badge pill className='bold mt-1' variant='danger'><FontAwesomeIcon icon={faStarOfLife} color='gold' /> 主打商品</Badge>
                     }
                 </Card.Body>
