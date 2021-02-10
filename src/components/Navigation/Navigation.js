@@ -18,7 +18,7 @@ function Navigation() {
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link className="mr-3 heading3 white" href="/">
+        <Nav.Link className="mr-3 heading3 white" href="/products">
           商品
         </Nav.Link>
       </Nav.Item>

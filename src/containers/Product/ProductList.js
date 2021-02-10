@@ -16,7 +16,7 @@ function ProductList(props) {
     return (
         <Container className='mt-3'>
             <Row className='justify-content-between'>
-                <Col className='heading1 mt-3'>商品一览</Col>
+                <Col className='title mt-3'>商品一览</Col>
                 <Col className='mt-3' sm='auto'>
                     <Button className='button' variant='success' onClick={()=>{history.push('/add')}}>
                         <FontAwesomeIcon icon={faPlus} />&nbsp; 添加商品

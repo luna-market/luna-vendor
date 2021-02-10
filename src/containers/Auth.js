@@ -99,7 +99,7 @@ const Auth = () => {
       <Container fluid style={{ maxWidth: '500px' }}>
         <Card className='mt-5' border='light'>
           <Card.Body>
-            <Card.Title className="heading1">{login ? 'Login' : 'Sign Up'}</Card.Title>
+            <Card.Title className="title">{login ? 'Login' : 'Sign Up'}</Card.Title>
             {!formState.login && (
               <Form.Group>
                 <Form.Label className='label'>wechat</Form.Label>

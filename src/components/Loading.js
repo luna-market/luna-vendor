@@ -4,7 +4,7 @@ import '../styles.css'
 
 function Loading(props) {
     const center = () => {
-        console.log('centered: ', props.centered)
+        // console.log('centered: ', props.centered)
         if (props.centered) return { marginTop: '40vh' }
         else return { marginTop: '40px' }
     }
