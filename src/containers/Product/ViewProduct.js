@@ -159,8 +159,8 @@ const ViewProduct = (props) => {
         switch (requirement) {
             case 'TYPE0': return '仅下单'
             case 'TYPE1': return '5星'
-            case 'TYPE2': return '5星+评论'
-            case 'TYPE3': return '5星+评论+图片'
+            case 'TYPE2': return '5星 + 评论'
+            case 'TYPE3': return '5星 + 评论 + 图片'
         }
     }
 
@@ -197,7 +197,7 @@ const ViewProduct = (props) => {
 
     return (
         <Container className='mt-4 mb-5'>
-            <Row className='justify-content-between' style={{alignItems:'center'}}>
+            <Row className='justify-content-between' style={{ alignItems: 'center' }}>
                 <Col className='title mt-3' >商品信息</Col>
                 <Col sm='auto'  >
                     {updateLoading ? <Spinner className='mr-4' animation="border" size="sm" /> : <div className='mr-4 mt-2 ' style={{ color: 'red' }}>{error}</div>}
@@ -264,7 +264,7 @@ const ViewProduct = (props) => {
                                 <Form.Control value={amazon_link} type="text" onChange={e => set_amazon_link(e.target.value)} />
                             </InputGroup>
                             :
-                            <Form.Text className='heading3'><FontAwesomeIcon icon={faLink} />&nbsp;<a href={amazon_link} style={{wordBreak:'strict', display:'inline-block'}}>{amazon_link}</a></Form.Text>}
+                            <Form.Text className='heading3'><FontAwesomeIcon icon={faLink} />&nbsp;<a href={amazon_link} style={{ wordBreak: 'break-all', display: 'inline-block' }}>{amazon_link}</a></Form.Text>}
                     </Form.Group>
 
                     <Form.Group className='mb-5'>
@@ -274,6 +274,30 @@ const ViewProduct = (props) => {
                             :
                             <Form.Text className='heading3'>{description}</Form.Text>}
                     </Form.Group>
+
+                    {editMode ?
+                        <Form.File custom={false} className='mb-5'>
+                            <Form.File.Label className='heading1 blue' data-browse="Browse files">产品图片</Form.File.Label>
+                            <Container>
+                                <Row lg={2}>
+                                    <Image src={images[0]} fluid />
+                                </Row>
+                                <Row className='mt-2'>
+                                    <Form.File.Input isValid={false} />
+                                </Row>
+                                <Row className='justify-content-between mt-1 align-items-center' >
+                                    <Button className='button mt-2' variant="dark" onClick={uploadImage}>上传图片</Button>
+                                    <div className='mt-2' style={{ color: 'red' }}>{imgError}</div>
+                                </Row>
+
+                            </Container>
+                        </Form.File>
+                        :
+                        <Container className='mb-5'>
+                            <Row className='heading1 blue'>产品图片 </Row>
+                            <Row className='mt-2' sm={2} md={4} lg={2}><Image src={images[0]} fluid /></Row>
+                        </Container>
+                    }
                 </Col>
 
                 <Col lg={1}></Col>
@@ -335,7 +359,7 @@ const ViewProduct = (props) => {
                             <>
                                 <Form.Label className='heading1 blue'> 商品当前在亚马逊网站处在 </Form.Label>
                                 <InputGroup
-                                    className="mb-3"
+                                    className="mb-3 "
                                     style={{ width: '140px' }}
                                 >
                                     <InputGroup.Prepend>
@@ -349,35 +373,10 @@ const ViewProduct = (props) => {
                             </>
                             :
                             <>
-                                <Form.Label className='heading1 blue'> 商品当前在亚马逊网站处在: <span className='heading3'> 第{amazon_location}页</span></Form.Label>
-
+                                <Form.Label className='heading1 blue'>商品当前在亚马逊网站处在</Form.Label>
+                                <Form.Text className='heading3'> 第{amazon_location}页</Form.Text>
                             </>}
                     </Form.Group>
-
-                    {editMode ?
-                        <Form.File custom={false}>
-                            <Form.File.Label className='heading1 blue' data-browse="Browse files">产品图片</Form.File.Label>
-                            <Container>
-                                <Row lg={2}>
-                                    <Image src={images[0]} fluid />
-                                </Row>
-                                <Row className='mt-2'>
-                                    <Form.File.Input isValid={false} />
-                                </Row>
-                                <Row className='justify-content-between mt-1 align-items-center' >
-                                    <Button className='button mt-2' variant="dark" onClick={uploadImage}>上传图片</Button>
-                                    <div className='mt-2' style={{ color: 'red' }}>{imgError}</div>
-                                </Row>
-
-                            </Container>
-                        </Form.File>
-                        :
-                        <Container>
-                            <Row >产品图片 </Row>
-                            <Row className='mt-2' sm={2} md={4} lg={2}><Image src={images[0]} fluid /></Row>
-                        </Container>
-                    }
-
 
                 </Col>
             </Row>

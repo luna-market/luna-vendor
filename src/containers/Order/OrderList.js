@@ -36,7 +36,7 @@ function OrderList(props) {
 
     if (loading) return <Loading centered={true} />
     return (
-        <Container className='mt-5'>
+        <Container className='mt-5' style={{maxWidth:'800px'}}>
             <div className='title'>订单列表</div>
             <hr className='mb-4'/>
             {data.getOrdersByVendorID.map((d) => <OrderItem data={d} />)}

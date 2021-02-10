@@ -17,8 +17,6 @@ const ProductCard = (props) => {
         history.push('/product/' + props.pid)
     }
 
-    console.log(props.sold , props.provided)
-
     return (
         <Col className="featured-card-col mb-3 pl-0" xs={6} sm={4} md={3}>
             <Card style={{ width: "auto", border: "0" }} onClick={cardOnClick}>
