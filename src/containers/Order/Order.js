@@ -3,7 +3,7 @@ import { useQuery, useMutation, gql } from '@apollo/client';
 import { useHistory, useParams } from "react-router";
 import { AUTH_TOKEN, VENDOR_ID } from "../../constants"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCopy, faClipboard } from '@fortawesome/free-solid-svg-icons'
+import { faCopy } from '@fortawesome/free-solid-svg-icons'
 import { Container, Button, Badge, Card, OverlayTrigger, Tooltip, Row, Col, Image } from "react-bootstrap";
 import '../../styles.css'
 
@@ -46,7 +46,6 @@ function Order(props) {
             "getOrderByIdId": orderId
         },
         onCompleted: (data) => {
-            // console.log(data.getOrderByID.vendor_id, localStorage.getItem(VENDOR_ID))
             if (data.getOrderByID.vendor_id !== Number(localStorage.getItem(VENDOR_ID))) history.push('/err')
         }
     })
@@ -82,9 +81,9 @@ function Order(props) {
     const pill = (status) => {
         switch (status) {
             case 'APPLIED': return { color: 'info', text: '待下单' }
-            case 'PURCHASED': return { color: 'warning', text: '已下单' }
-            case 'REVIEWED': return { color: 'danger', text: '已留评' }
-            case 'APPROVED': return { color: 'success', text: '已通过审核' }
+            case 'PURCHASED': return { color: 'warning', text: '待留评' }
+            case 'REVIEWED': return { color: 'danger', text: '待审核' }
+            case 'APPROVED': return { color: 'success', text: '待结算' }
             case 'FINISHED': return { color: 'dark', text: '已完成' }
             default: return { color: 'light', text: '' }
         }
@@ -105,9 +104,9 @@ function Order(props) {
             <Card border='light'>
                 <Card.Body className='p-5'>
                     <Row className='justify-content-between' style={{ alignItems: 'center' }}>
-                        <Col xs='auto' className='mt-1'>
+                        <Col xs='auto' className='mt-1 mb-1'>
                             <div className='label'>{new Date(Number(date)).toLocaleDateString()}</div>
-                            <div className='heading1'>订单 #{orderId} {productName}</div>
+                            <div className='title'>订单 #{orderId} </div>
                         </Col>
                         <Col xs='auto'><Badge className='heading3 p-2' pill variant={pill(status).color}>&nbsp;{pill(status).text}&nbsp;</Badge></Col>
                         {/* <Col className='label mt-3'></Col>
@@ -115,6 +114,8 @@ function Order(props) {
 
                         </Col> */}
                     </Row>
+                    
+                    <Card.Text className='one-line heading3'>{productName}</Card.Text>
                     <hr className='mb-3' />
 
                     <Row className='mb-5'>
@@ -145,16 +146,22 @@ function Order(props) {
                         </Col>
                     </Row>
                     {purchaseImg &&
-                        <Row className='mb-1 pt-5'>
-                            <Col xs={2}><Card.Text className='heading3'>订单截图</Card.Text></Col>
-                            <Col><Image thumbnail fluid src={purchaseImg} /></Col>
-                        </Row>}
+                        <>
+                            <hr />
+                            <Row className='mb-1'>
+                                <Col xs={2}><Card.Text className='heading3'>订单截图</Card.Text></Col>
+                                <Col><Image thumbnail fluid src={purchaseImg} /></Col>
+                            </Row>
+                        </>}
 
                     {reviewImg &&
-                        <Row className='mt-4 mb-1'>
-                            <Col xs={2}><Card.Text className='heading3'>留评截图</Card.Text></Col>
-                            <Col><Image thumbnail fluid src={reviewImg} /></Col>
-                        </Row>}
+                        <>
+                            <hr className='mt-5'/>
+                            <Row className='mb-1'>
+                                <Col xs={2}><Card.Text className='heading3'>留评截图</Card.Text></Col>
+                                <Col><Image thumbnail fluid src={reviewImg} /></Col>
+                            </Row>
+                        </>}
 
 
                 </Card.Body>

@@ -198,7 +198,7 @@ const ViewProduct = (props) => {
     return (
         <Container className='mt-4 mb-5'>
             <Row className='justify-content-between' style={{alignItems:'center'}}>
-                <Col className='heading1 mt-3' >商品信息</Col>
+                <Col className='title mt-3' >商品信息</Col>
                 <Col sm='auto' className='mt-1' >
                     {updateLoading ? <Spinner className='mr-4' animation="border" size="sm" /> : <div className='mr-4 mt-2 ' style={{ color: 'red' }}>{error}</div>}
                     {editMode && <Button className='button mr-4' variant="info" onClick={updateProduct}>保存更改</Button>}

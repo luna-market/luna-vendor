@@ -66,7 +66,7 @@ function Profile(props) {
 
             <Card border='light'>
                 <Card.Body>
-                    <Card.Title className='heading1 mb-3'>我的账号</Card.Title>
+                    <Card.Title className='title mb-3'>我的账号</Card.Title>
 
                     <Form.Group>
                         <Form.Label className='label'>账号</Form.Label>
