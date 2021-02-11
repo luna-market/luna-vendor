@@ -13,17 +13,17 @@ function Navigation() {
   const navitems = () => 
     <>
       <Nav.Item>
-        <Nav.Link className="heading3 white mr-3" href="/orders">
+        <Nav.Link className="heading1 white mr-3" href="/orders">
           订单
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link className="mr-3 heading3 white" href="/products">
+        <Nav.Link className="mr-3 heading1 white" href="/products">
           商品
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link className="mr-4 heading3 white" href="/profile">
+        <Nav.Link className="mr-4 heading1 white" href="/profile">
           我的账号
         </Nav.Link>
       </Nav.Item>
@@ -42,7 +42,7 @@ function Navigation() {
   return (
     <Navbar collapseOnSelect expand="lg" className="color-nav" sticky="top">
       <Navbar.Brand color="white" href="/" >
-        LUNA<span className='heading1 yellow'>&nbsp; Vendor</span>
+        LUNA<span className='title yellow'>&nbsp; Vendor</span>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
