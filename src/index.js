@@ -8,6 +8,8 @@ import { BrowserRouter } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import {Auth0Provider} from "@auth0/auth0-react";
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -43,13 +45,19 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
-  </ApolloProvider>,
+  <Auth0Provider 
+    domain="lunamkt.us.auth0.com"
+    clientId="hHU2ghNC2n9yG77WMhZe8hWNAMq8r5z8"
+    redirectUri={window.location.origin}
+  >
+    <ApolloProvider client={client}>
+      <React.StrictMode>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </React.StrictMode>
+    </ApolloProvider>
+  </Auth0Provider>,
   document.getElementById("root")
 );
 

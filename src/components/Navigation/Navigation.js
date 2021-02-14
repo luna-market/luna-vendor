@@ -4,10 +4,13 @@ import "../../styles.css";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { useHistory } from 'react-router';
 import { AUTH_TOKEN } from '../../constants'
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Navigation() {
   const history = useHistory()
   const authToken = localStorage.getItem(AUTH_TOKEN);
+
+  const { loginWithRedirect } = useAuth0();
   // console.log(authToken)
 
   const navitems = () => 
@@ -52,6 +55,7 @@ function Navigation() {
               navitems()
             ) : (
                 <Nav.Item>
+                  <Button onClick={() => loginWithRedirect()}>Auth0</Button>
                 </Nav.Item>
               )
           }
