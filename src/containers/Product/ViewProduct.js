@@ -264,7 +264,7 @@ const ViewProduct = (props) => {
                                 <Form.Control value={amazon_link} type="text" onChange={e => set_amazon_link(e.target.value)} />
                             </InputGroup>
                             :
-                            <Form.Text className='heading3'><FontAwesomeIcon icon={faLink} />&nbsp;<a href={amazon_link} style={{ wordBreak: 'break-all', display: 'inline-block' }}>{amazon_link}</a></Form.Text>}
+                            <Form.Text className='heading3'><a href={amazon_link} style={{ wordBreak: 'break-all', display: 'inline-block' }}>{amazon_link}</a></Form.Text>}
                     </Form.Group>
 
                     <Form.Group className='mb-5'>
@@ -295,7 +295,7 @@ const ViewProduct = (props) => {
                         :
                         <Container className='mb-5'>
                             <Row className='heading1 blue'>产品图片 </Row>
-                            <Row className='mt-2' sm={2} md={4} lg={2}><Image src={images[0]} fluid /></Row>
+                            <Row className='mt-2' ><Image src={images[0]} fluid /></Row>
                         </Container>
                     }
                 </Col>
