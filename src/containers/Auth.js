@@ -4,6 +4,7 @@ import { useHistory } from 'react-router';
 import { AUTH_TOKEN, VENDOR_ID } from '../constants';
 
 import { Card, Button, Container, Form } from "react-bootstrap";
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 const SIGNUP_MUTATION = gql`
     mutation Mutation(
@@ -41,8 +42,13 @@ const LOGIN_MUTATION = gql`
     }
 `
 
-const Auth = () => {
+const Auth = (props) => {
   const history = useHistory();
+
+  if (props.loggedIn) {
+    history.push('/')
+  }
+
   const [formState, setFormState] = useState({
     login: true,
     wechat: '',
@@ -61,6 +67,7 @@ const Auth = () => {
       console.log(vendorLogin)
       localStorage.setItem(AUTH_TOKEN, vendorLogin.token);
       localStorage.setItem(VENDOR_ID, vendorLogin.vendor.id);
+      props.setLoggedIn(true)
       history.push('/');
     },
     onError: (e) => {
@@ -142,7 +149,7 @@ const Auth = () => {
                 type="password"
               />
             </Form.Group>
-            <Form.Text className="text" style={{color:'red'}}>
+            <Form.Text className="text" style={{ color: 'red' }}>
               {formState.error}
             </Form.Text>
 
