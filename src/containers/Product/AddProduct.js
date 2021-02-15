@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router';
 
 import { gql, useMutation } from '@apollo/client';
-import { VENDOR_ID } from "../../constants"
+import { AUTH_TOKEN, VENDOR_ID } from "../../constants"
 
 import { Form, Button, Container, Col, Row, Card, InputGroup, Spinner, Image } from 'react-bootstrap'
 import '../../styles.css'
@@ -41,6 +41,12 @@ const CREATE_PRODUCT = gql`
 
 const AddProduct = () => {
     const history = useHistory()
+
+    const token = localStorage.getItem(AUTH_TOKEN)
+
+    if (!token) {
+        history.push('/auth')
+    }
 
     const [product_name, set_product_name] = useState('')
     const [brand, set_brand] = useState('')

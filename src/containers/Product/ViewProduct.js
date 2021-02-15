@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useHistory, useParams } from "react-router";
 
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { VENDOR_ID } from "../../constants"
+import { AUTH_TOKEN, VENDOR_ID } from "../../constants"
 
 import { Form, Button, Container, Col, Row, Card, InputGroup, Spinner, Image } from 'react-bootstrap'
 import '../../styles.css'
@@ -62,6 +62,13 @@ const STATUS_TOGGLE = ``
 
 const ViewProduct = (props) => {
     const history = useHistory()
+
+    const token = localStorage.getItem(AUTH_TOKEN)
+
+    if (!token) {
+        history.push('/auth')
+    }
+
     const productId = Number(useParams().productId)
 
     /* prevent vendor from accessing other vendor's data */

@@ -22,7 +22,7 @@ import { AUTH_TOKEN } from './constants';
 console.log(process.env.SERVER_URL)
 
 const httpLink = createHttpLink({
-  uri: 'https://luna-backend-aozd9.ondigitalocean.app/'
+  uri: 'https://apollo-vendor-e6tnt.ondigitalocean.app/'
   // uri: 'http://localhost:4000/'
   // uri: process.env.SERVER_URL
 });

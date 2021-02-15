@@ -42,6 +42,12 @@ function Order(props) {
     const { orderId } = useParams()
     const history = useHistory()
 
+    const token = localStorage.getItem(AUTH_TOKEN)
+
+    if (!token) {
+        history.push('/auth')
+    }
+
     const { loading } = useQuery(GET_VENDOR_ID, {
         variables: {
             "getOrderByIdId": orderId

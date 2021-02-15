@@ -27,6 +27,16 @@ mutation VendorUpdateMutation($vendorUpdateId: Int!, $vendorUpdateInput: VendorU
 `
 
 function Profile(props) {
+
+    const history = useHistory()
+
+    const token = localStorage.getItem(AUTH_TOKEN)
+
+    if (!token) {
+        history.push('/auth')
+    }
+
+
     const [email, setEmail] = useState()
     const [wechat, setWechat] = useState()
     const [phone, setPhone] = useState()

@@ -28,20 +28,29 @@ query Query($getOrdersByVendorIdId: ID!) {
 
 
 function OrderList(props) {
-    const { loading, data } = useQuery(GET_ORDERS, {
-        variables: {
-            "getOrdersByVendorIdId": localStorage.getItem(VENDOR_ID)
-        }
-    })
 
-    if (loading) return <Loading centered={true} />
-    return (
-        <Container className='mt-5' style={{maxWidth:'800px'}}>
-            <div className='title'>订单列表</div>
-            <hr className='mb-4'/>
-            {data.getOrdersByVendorID.map((d) => <OrderItem data={d} />)}
-        </Container>
-    )
+  const history = useHistory()
+
+  const token = localStorage.getItem(AUTH_TOKEN)
+
+  if (!token) {
+      history.push('/auth')
+  }
+
+  const { loading, data } = useQuery(GET_ORDERS, {
+      variables: {
+          "getOrdersByVendorIdId": localStorage.getItem(VENDOR_ID)
+      }
+  })
+
+  if (loading) return <Loading centered={true} />
+  return (
+      <Container className='mt-5' style={{maxWidth:'800px'}}>
+          <div className='title'>订单列表</div>
+          <hr className='mb-4'/>
+          {data.getOrdersByVendorID.map((d) => <OrderItem data={d} />)}
+      </Container>
+  )
 }
 
 export default OrderList
