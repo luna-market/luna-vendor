@@ -112,10 +112,6 @@ function Order(props) {
                             <div className='title blue'>订单 #{orderId} </div>
                         </Col>
                         <Col xs='auto'><Badge className='heading3 p-2' pill variant={pill(status).color}>&nbsp;{pill(status).text}&nbsp;</Badge></Col>
-                        {/* <Col className='label mt-3'></Col>
-                        <Col className='mt-3' sm='auto'>
-
-                        </Col> */}
                     </Row>
 
                     <Card.Text className='one-line text ml-1'>{productName}</Card.Text>
@@ -146,8 +142,8 @@ function Order(props) {
                                     <FontAwesomeIcon icon={faCopy} className='blue' onClick={copyPayId} />
                                 </OverlayTrigger>
                             </Card.Text>
-                            <Card.Text className={status==='REVIEWED'?'heading1 mb-2 yellow':'heading3'}>待补贴金额: ${price}</Card.Text>
-                            {status==='REVIEWED' && <Button className='button' variant='warning'><FontAwesomeIcon icon={faCheck}/> 我已完成补贴</Button>}
+                            <Card.Text className={status === 'REVIEWED' ? 'heading1 mb-2 yellow' : 'heading3'}>待补贴金额: ${price}</Card.Text>
+                            {/* {status==='REVIEWED' && <Button className='button' variant='warning'><FontAwesomeIcon icon={faCheck}/> 我已完成补贴</Button>} */}
                         </Col>
                     </Row>
                     {purchaseImg &&

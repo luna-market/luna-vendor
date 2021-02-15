@@ -75,9 +75,12 @@ const ViewProduct = (props) => {
             "getProductsByVendorIdId": localStorage.getItem(VENDOR_ID)
         },
         onCompleted: (data) => {
-
-            // if (!data.getProductsByVendorIdId.products_id.includes(productId.toString())) history.push('/err')
-        }
+            for (const product of data.getProductsByVendorID) {
+                if (product.id === productId) return
+            }
+            history.push('/err')
+        },
+        onError: () => history.push('/err')
     })
 
     const [product_name, set_product_name] = useState('')
