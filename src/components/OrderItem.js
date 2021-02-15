@@ -26,7 +26,7 @@ function OrderItem(props) {
     }
 
     return (
-        <Card border='light' onClick={() => history.push('/order/' + props.data.id)}>
+        <Card className='mt-2' border='light' onClick={() => history.push('/order/' + props.data.id)}>
             <Card.Body>
                 <Row className='justify-content-between mb-1' style={{ alignItems: 'center' }}>
                     <Col className='heading1' xs='auto' style={{ alignContent: 'start' }}>

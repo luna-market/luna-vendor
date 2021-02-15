@@ -42,8 +42,8 @@ query Query($getProductByIdId: ID!) {
   `
 
 const UPDATE_PRODUCT = gql`
-mutation Mutation($updateProductId: Int!, $updateProductName: String, $updateProductPrice: Float, $updateProductDescription: String, $updateProductProvidedQuantity: Int, $updateProductAmazonLink: String, $updateProductRequirement: Requirement, $updateProductSearchKeyWord: String, $updateProductCurrentAmazonLocation: String, $updateProductStatus: ProductStatus) {
-    updateProduct(id: $updateProductId, name: $updateProductName, price: $updateProductPrice, description: $updateProductDescription, provided_quantity: $updateProductProvidedQuantity, amazon_link: $updateProductAmazonLink, requirement: $updateProductRequirement, search_key_word: $updateProductSearchKeyWord, current_amazon_location: $updateProductCurrentAmazonLocation, status: $updateProductStatus) {
+mutation Mutation($updateProductId: Int!, $updateProductName: String, $updateProductPrice: Float, $updateProductDescription: String, $updateProductProvidedQuantity: Int, $updateProductAmazonLink: String, $updateProductRequirement: Requirement, $updateProductSearchKeyWord: String, $updateProductCurrentAmazonLocation: String) {
+    updateProduct(id: $updateProductId, name: $updateProductName, price: $updateProductPrice, description: $updateProductDescription, provided_quantity: $updateProductProvidedQuantity, amazon_link: $updateProductAmazonLink, requirement: $updateProductRequirement, search_key_word: $updateProductSearchKeyWord, current_amazon_location: $updateProductCurrentAmazonLocation) {
       name
       price
       description
@@ -58,7 +58,12 @@ mutation Mutation($updateProductId: Int!, $updateProductName: String, $updatePro
     }
   }`
 
-const STATUS_TOGGLE = ``
+const CHANGE_VISIBILITY = gql`
+mutation ChangeVisibilityMutation($changeVisibilityId: Int!, $changeVisibilityStatus: ProductStatus) {
+    changeVisibility(id: $changeVisibilityId, status: $changeVisibilityStatus) {
+      status
+    }
+  }`
 
 const ViewProduct = (props) => {
     const history = useHistory()
@@ -77,9 +82,12 @@ const ViewProduct = (props) => {
             "getProductsByVendorIdId": localStorage.getItem(VENDOR_ID)
         },
         onCompleted: (data) => {
-
-            // if (!data.getProductsByVendorIdId.products_id.includes(productId.toString())) history.push('/err')
-        }
+            for (const product of data.getProductsByVendorID) {
+                if (product.id === productId) return
+            }
+            history.push('/err')
+        },
+        onError: () => history.push('/err')
     })
 
     const [product_name, set_product_name] = useState('')
@@ -98,7 +106,8 @@ const ViewProduct = (props) => {
     const [featured, set_featured] = useState(false)
 
     const [editMode, setEditMode] = useState(false)
-    const [updating, setUpdating] = useState(false)
+
+    // const [updating, setUpdating] = useState(false)
     const [saved, setSaved] = useState(false)
     const [updateError, setUpdateError] = useState('')
 
@@ -132,14 +141,13 @@ const ViewProduct = (props) => {
         variables: {
             "updateProductId": productId,
             "updateProductName": product_name,
-            "updateProductPrice": price,
+            "updateProductPrice": Number(price),
             "updateProductDescription": description,
-            "updateProductProvidedQuantity": provided_quantity,
+            "updateProductProvidedQuantity": Number(provided_quantity),
             "updateProductAmazonLink": amazon_link,
             "updateProductRequirement": requirement,
             "updateProductSearchKeyWord": search_key_word,
             "updateProductCurrentAmazonLocation": amazon_location,
-            // "updateProductStatus": null
         },
         onCompleted: () => {
             setEditMode(false)
@@ -160,7 +168,14 @@ const ViewProduct = (props) => {
         onError: (e) => { setUpdateError(e) }
     })
 
-    const deleteProduct = () => { }
+    const [changeVisibility, { loading: visibilityLoading }] = useMutation(CHANGE_VISIBILITY, {
+        variables: {
+            "changeVisibilityId": productId,
+            "changeVisibilityStatus": status === 'ACTIVE' ? 'DISABLED' : 'ACTIVE'
+        },
+        onCompleted: data => set_status(data.changeVisibility.status),
+        onError: err => set_error(err)
+    })
 
     const requirementText = () => {
         switch (requirement) {
@@ -196,7 +211,7 @@ const ViewProduct = (props) => {
                 }
             })
             .catch(err => {
-                console.log('error: ', err)
+                console.log('Image Upload Error: ', err)
             });
     }
 
@@ -207,16 +222,18 @@ const ViewProduct = (props) => {
             <Row className='justify-content-between' style={{ alignItems: 'center' }}>
                 <Col className='title mt-3' >商品信息</Col>
                 <Col sm='auto'  >
-                    {updateLoading ? <Spinner className='mr-4' animation="border" size="sm" /> : <div className='mr-4 mt-2 ' style={{ color: 'red' }}>{error}</div>}
+                    {updateLoading || visibilityLoading ?
+                        <Spinner className='mr-4' animation="border" size="sm" />
+                        :
+                        <div className='mr-4 mt-2 ' style={{ color: 'red' }}>{error + ' ' + updateError}</div>
+                    }
                     {editMode && <Button className='button mr-4 mt-3' variant="info" onClick={updateProduct}><FontAwesomeIcon icon={faSave} />&nbsp; 保存更改</Button>}
                     <Button className='button mr-4 mt-3' variant='warning' onClick={() => { setEditMode(!editMode) }}>
                         {editMode ? '取消修改' : <><FontAwesomeIcon icon={faEdit} />&nbsp; 修改</>}
                     </Button>
-                    <Button className='button mt-3' variant={status ? 'success' : 'outline-secondary'}
-                        onClick={
-                            () => set_status(!status)  // Need to have proper handler
-                        }>
-                        <FontAwesomeIcon icon={status ? faEye : faEyeSlash} />&nbsp; {status ? '显示中' : '隐藏中'}
+                    <Button className='button mt-3' variant={status === 'ACTIVE' ? 'success' : 'outline-secondary'}
+                        onClick={changeVisibility}>
+                        <FontAwesomeIcon icon={status === 'ACTIVE' ? faEye : faEyeSlash} />&nbsp; {status === 'ACTIVE' ? '显示中' : '隐藏中'}
                     </Button>
                 </Col>
             </Row>
@@ -333,22 +350,28 @@ const ViewProduct = (props) => {
                     <Row>
                         <Col>
                             <Form.Group className='mb-5'>
-                                <Form.Label className='heading1 blue'> 所需单数{editMode && '(需大于已售单数)'}</Form.Label>
+                                <Form.Label className='heading1 blue'> 所需单数{editMode && <span className='heading3'> (须大于已售)</span>}</Form.Label>
                                 {editMode ?
                                     <InputGroup className="mb-3">
-                                        <Form.Control value={provided_quantity} placeholder="0" type="text" onChange={e => set_provided_quantity(e.target.value)} />
+                                        <Form.Control value={provided_quantity} placeholder="0" type="text"
+                                            onChange={e => {
+                                                let provided = Number(e.target.value)
+                                                if (provided > sold_quantity)
+                                                    set_provided_quantity(provided)
+                                                // else 
+                                            }} />
                                         <InputGroup.Append>
-                                            <InputGroup.Text id="basic-addon2">件</InputGroup.Text>
+                                            <InputGroup.Text id="basic-addon2"> 件</InputGroup.Text>
                                         </InputGroup.Append>
                                     </InputGroup>
                                     :
-                                    <Form.Text className='heading3'>{provided_quantity}件</Form.Text>}
+                                    <Form.Text className='heading3'>{provided_quantity} 件</Form.Text>}
                             </Form.Group>
                         </Col>
                         <Col xs={editMode ? 4 : 6}>
                             <Form.Group className='mb-5'>
                                 <Form.Label className='heading1 blue'>已售单数 </Form.Label>
-                                <Form.Text className='heading3'>{sold_quantity}件</Form.Text>
+                                <Form.Text className='heading3'>{sold_quantity} 件</Form.Text>
                             </Form.Group>
                         </Col>
                     </Row>
