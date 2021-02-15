@@ -103,7 +103,7 @@ function Order(props) {
 
     if (loading) return <Loading centered={true} />
     return (
-        <Container className='mt-5 mb-4' style={{ maxWidth: '1000px' }}>
+        <Container className='mt-5 mb-5' style={{ maxWidth: '1000px' }}>
             <Card border='light'>
                 <Card.Body className='p-5'>
                     <Row className='justify-content-between' style={{ alignItems: 'center' }}>
